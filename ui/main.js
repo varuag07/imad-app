@@ -20,5 +20,5 @@ button.onclick = function() {
     };
     //Make the Http Request.
     request.open('GET','http://varuag07.imad.hasura-app.io/counter',true);
-    result.send(null);
+    request.send(null);
 };
