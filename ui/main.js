@@ -1,7 +1,7 @@
 console.log('Loaded!');
 var button = document.getElementById('counter');
 
-button.onClick = function() {
+button.onclick = function() {
     //Create request to Counter endpoint
     alert('Button Clicked.');
     var request = new XMLHttpRequest();
