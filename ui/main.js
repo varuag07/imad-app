@@ -3,6 +3,7 @@ var button = document.getElementById('counter');
 
 button.onClick = function() {
     //Create request to Counter endpoint
+    alert('Button Clicked.');
     var request = new XMLHttpRequest();
     
     //Capture the response
