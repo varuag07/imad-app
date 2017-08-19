@@ -7,7 +7,7 @@ var config = {
     database : 'varuag07',
     host : 'http://db.imad.hasura-app.io',
     port : '5432',
-    password : 'db-varuag07-63596'    //process.env.DB_PASSWORD
+    password : process.env.DB_PASSWORD
 };
 var app = express();
 app.use(morgan('combined'));
@@ -79,7 +79,7 @@ app.get('/test-db',function(req,res){
         }
         else
         {
-            res.send(JSON.stringify(result));
+            res.send(JSON.stringify(results));
         }
     });
     //Return Results from db
