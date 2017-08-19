@@ -70,7 +70,7 @@ app.get('/submit-name/:name',function(req,res){
 });
 //Database Connection
 var pool = new Pool(config);
-app.get('/testdb',function(req,res){
+app.get('/test-db',function(req,res){
     //Make a select Query
     pool.query('SELECT * FROM Test', function(err,results){
         if(err)
