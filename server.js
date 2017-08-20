@@ -13,7 +13,7 @@ var config = {
 };
 var app = express();
 app.use(morgan('combined'));
-app.use(bodyParser.JSON());
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
