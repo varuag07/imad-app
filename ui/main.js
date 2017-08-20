@@ -8,7 +8,7 @@ submit.onclick = function () {
     request.onreadystatechange = function() {
       if(request.readyState === XMLHttpRequest.DONE)
       {
-          if(request.status === 200)
+          if(request.status === 200 && request.response === "Login Successful" )
           {
              console.log("Login Successful");
              alert("logged in successfully");
@@ -21,6 +21,10 @@ submit.onclick = function () {
           else if(request.status === 500)
           {
               alert("Something went wrong in the server. Try again.");
+          }
+          else
+          {
+              alert("Password Incorrect.");
           }
       }
     };
