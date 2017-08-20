@@ -109,6 +109,11 @@ app.get('/check-login', function(req, res){
     }
 });
 
+//Logout check
+app.get('/logout', function(req,res){
+    delete req.session.auth;
+    res.send("You are Logged out");
+});
 /*app.get('/article-one', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
 });
