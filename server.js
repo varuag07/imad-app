@@ -22,7 +22,7 @@ app.get('/hash/:input', function (req,res) {
     res.send(hashedString);
 });
 
-function hash(input)
+function hash(input,salt)
 {
     //Create a Hash.
     var hashed = crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
