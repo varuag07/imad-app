@@ -3,6 +3,7 @@ var morgan = require('morgan');
 var path = require('path');
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var Pool = require('pg').Pool;
 var config = {
     user : 'varuag07',
@@ -14,6 +15,10 @@ var config = {
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(session({
+    secret: "SomeRandomSecretValue",
+    cookie: { MaxAge: 1000 * 60 * 60 * 24 * 30 }
+}));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
@@ -79,8 +84,11 @@ app.post('/login', function(req,res){
                 var hashedPassword = hash(password,salt);
                 if(hashedPassword === dbString)
                 {
-                    res.send('Login Successful');   
                     //Set Session
+                    req.session.auth = {userId: result.rows[0].id};
+                    
+                    res.send('Login Successful');   
+                    
                 }else
                 {
                     res.send('Incorrect Password');
@@ -90,6 +98,16 @@ app.post('/login', function(req,res){
     });
 });
 
+app.get('/check-login', function(req, res){
+    if(req.session && req.session.auth && req.session.auth.userId)
+    {
+        res.send("You are logged in: " + req.session.auth.userId.toString());
+    }
+    else
+    {
+        res.send("You are not logged in.");
+    }
+});
 
 /*app.get('/article-one', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
