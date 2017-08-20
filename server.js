@@ -7,7 +7,7 @@ var Pool = require('pg').Pool;
 var config = {
     user : 'varuag07',
     database : 'varuag07',
-    host : 'http://db.imad.hasura-app.io',
+    host : 'db.imad.hasura-app.io',
     port : '5432',
     password : process.env.DB_PASSWORD
 };
@@ -39,7 +39,7 @@ app.post('/create-user', function(req,res){
     
     var salt = crypto.randomBytes(128).toString('hex');
     var dbString = hash(password,salt);
-    pool.query('INSERT INTO "UserLogin" (UserName,Password) VALUES ($1,$2)', [username, dbString], function (err, result){
+    pool.query('INSERT INTO "UserLogin" ("UserName", "Password") VALUES ($1,$2)', [username, dbString], function (err, result){
         
         if(err)
         {
@@ -47,7 +47,7 @@ app.post('/create-user', function(req,res){
         }
         else
         {
-            res.send('User Successfully Created: ' + username)    
+            res.send('User Successfully Created: ' + username);    
         }
     });
 });
