@@ -29,6 +29,14 @@ function hash(input,salt)
     return ['pbkdf2' , '10000', salt , hashed.toString('hex')].join('$');
 }
 
+//Register a new user
+app.get('/create-user', function(req,res){
+    
+    var salt = crypto.getRandomBytes(128).toString('hex');
+    var dbstring = hash(password,salt);
+    pool.query('INSERT INTO "UserLogin" (username,password) VALUES ($1,$2)');
+});
+
 /*app.get('/article-one', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
 });
