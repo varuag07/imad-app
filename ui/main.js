@@ -1,37 +1,43 @@
-console.log('Loaded!');
-var button = document.getElementById('counter');
 
-button.onclick = function() {
-    //Create request to Counter endpoint
-    //alert('Button Clicked.');
+var submit = document.getElementById('btn_submit');
+
+submit.onclick = function () {
     var request = new XMLHttpRequest();
     
     //Capture the response
     request.onreadystatechange = function() {
-      if(request.readyState === XMLHttpRequest.DONE && request.status === 200)
+      if(request.readyState === XMLHttpRequest.DONE)
       {
-         var counter = request.responseText;
-         var span = document.getElementById('count');
-         span.innerHTML = counter.toString();
+          if(request.status === 200)
+          {
+             console.log("Login Successful");
+             alert("logged in successfully");
+             //Create a session
+          }
+          else if(request.status === 403)
+          {
+              alert("Username/Password incorrect.");
+          }
+          else if(request.status === 500)
+          {
+              alert("Something went wrong in the server. Try again.");
+          }
       }
     };
     //Make the Http Request.
-    request.open('GET','http://varuag07.imad.hasura-app.io/counter',true);
-    request.send(null);
-};
 
-//Submit Name
-var nameInput = document.getElementById('name');
-var submit = document.getElementById('submit_btn');
-submit.onclick = function () {
-    //Make request to the server.
-    //Capture the names and Display
-    var names = ['name1','name2','name3','name4'];
-    var list = '';
-    for(var i=0; i<names.length;i++)
-    {
-        list += '<li>' + names[i] + '</li>'
-    }
-    var ul = document.getElementById('namelist');
-    ul.innerHTML = list;
+//Submit Username Password Login
+
+    var username = document.getElementById('id_username').value;
+    var password = document.getElementById('id_password').value;
+    
+    var credentials = {
+        "username": username,
+        "password": password
+    };
+    console.log(credentials);
+    //Make Login Http Request
+    request.open('POST','http://varuag07.imad.hasura-app.io/login',true);
+    request.setRequestHeader('Content-Type','application/json');
+    request.send(JSON.stringify(credentials));
 };
